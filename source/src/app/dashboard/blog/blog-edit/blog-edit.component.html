@@ -1,0 +1,45 @@
+<md-card class="example-card" *ngIf="showForm">
+	<md-card-header>
+		<md-card-title>Edit blog</md-card-title>
+	</md-card-header>
+	<md-card-content>
+		<form name="form" (ngSubmit)="f.form.valid && edit_blog()" #f="ngForm" novalidate>
+			<md-input-container class="example-full-width">
+				<input mdInput placeholder="Title"  name="titleBlog" [(ngModel)]="blog.title" #titleBlog="ngModel" required>
+			</md-input-container>	
+			<div *ngIf="titleBlog.errors && (titleBlog.dirty || titleBlog.touched)" class="help-block">
+				<div [hidden]="!titleBlog.errors.required">Field is required</div>
+			</div>
+			<md-input-container class="example-full-width">
+				<textarea mdInput placeholder="Content short" maxlength="300" name="contentShort" [(ngModel)]="blog.content_short" #contentShort="ngModel" rows="5" required></textarea>
+			</md-input-container>
+			<div *ngIf="contentShort.errors && (contentShort.dirty || contentShort.touched)" class="help-block">
+				<div [hidden]="!contentShort.errors.required">Field is required</div>
+			</div>
+ 
+
+			<ckeditor 
+				[(ngModel)]="blog.content_full" name="contentFull" #contentFull="ngModel" debounce="500"
+				[config]="{height: '500'}"
+				></ckeditor>
+			<div *ngIf="contentFull.errors && (contentFull.dirty || contentFull.touched)" class="help-block">
+				<div [hidden]="!contentFull.errors.required">Field is required</div>
+			</div>
+
+
+			<div style="margin-top:15px">
+				<div *ngIf="blog.image && !image_preview">
+					<img class="image_profile_edit" [src]="blog.image" />
+				</div>
+				<div *ngIf="image_preview">
+					<img class="image_profile_edit" [src]="image_preview"  />
+				</div>
+				<input type="file" ng2FileSelect [uploader]="uploader" accept="image/*"/>
+			</div>
+
+			
+
+			<button md-button md-raised-button [disabled]="!f.form.valid" style="margin-top:20px" color="primary">Save</button>
+		</form>
+	</md-card-content>
+</md-card>

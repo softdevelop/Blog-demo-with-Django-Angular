@@ -1,0 +1,147 @@
+<div *ngIf="blog">
+	<!-- view blog -->
+	<div class="blog_view">
+		
+		<h1 class="title">
+			{{blog.title}}
+			<span *ngIf="cookie.userName === blog.created_by" class="pull-right">
+				<button md-icon-button [mdMenuTriggerFor]="menu">
+					<md-icon>more_vert</md-icon>
+				</button>
+				<md-menu #menu="mdMenu">
+					<a md-menu-item routerLink="/dashboard/blog-edit/{{blog.id}}">
+						<md-icon>edit</md-icon>
+						<span>Edit</span>
+					</a>
+					<a md-menu-item (click)="delete_blog(blog.id)">
+						<md-icon>delete</md-icon>
+						<span>Delete</span>
+					</a>
+				</md-menu>
+			</span>
+		</h1>
+		<hr>
+		<div class="image">
+			<img class="img_lazy" [defaultImage]="url_image_blog_default" [lazyLoad]="blog.image" [errorImage]="url_image_blog_default" [offset]="100">
+			<!-- <img *ngIf="blog.image" class="" [src]="blog.image"/>
+			<img *ngIf="!blog.image" class="" [src]="url_image_blog_default"/> -->
+		</div>
+		<div class="time">{{blog.created | amTimeAgo}}</div>
+		<div class="content_short">{{blog.content_short}}</div>
+		<div class="content_full" [innerHTML]="blog.content_full"></div>
+		<div class="author">{{blog.author}}</div>
+		<div>
+			<button color="primary" md-raised-button (click)="like_blog(blog)" [disabled]="!disable_like || blog.user_like">
+				<md-icon>thumb_up</md-icon> 
+				<span class="count_like">{{blog.like}}</span>
+			</button>
+		</div>
+	</div>
+
+	<hr>
+
+	<!-- form comment -->
+	<div class="padding_top_bottom_20" style="margin-top:50px">
+		<form name="form" (ngSubmit)="f.form.valid && comment_blog(blog.id, f)" #f="ngForm" novalidate>
+			<div class="row">
+				<div [class.col-xs-1]="cookie.token" *ngIf="cookie.token" class="img_comment_form">
+					<img *ngIf="!cookie.image" [src]="url_image_avatar_default"/>
+					<img *ngIf="cookie.image" [src]="cookie.image"/>
+				</div>
+				<div [class.col-xs-11]="cookie.token" class="col-xs-12">
+					<md-input-container class="example-full-width">
+						<textarea mdInput rows="5" placeholder="Comment" maxlength="200" name="contentShort" [(ngModel)]="comments" #contentShort="ngModel"  required></textarea>
+					</md-input-container>
+					<div *ngIf="contentShort.errors && (contentShort.dirty || contentShort.touched)" class="help-block">
+						<div [hidden]="!contentShort.errors.required">Field is required</div>
+					</div>
+				</div> 
+			</div>
+			<div class="text_right">
+				<button color="primary" md-button md-raised-button [disabled]="!f.form.valid || comments_loading" style="margin-top:20px">Comment</button>
+			</div>
+		</form>
+	</div>
+
+
+	<!-- comment list -->
+	<h3 id="commentss">Comments ({{comments_list.total}})</h3>
+	<hr>
+	<div class="comment_lists" *ngIf="comments_list.data">
+		<ul class="media-list">
+			<li class="media" *ngFor="let obj of comments_list.data" id="comments_{{obj.id}}">
+				<div class="media-left">
+					<img *ngIf="!obj.created_by_image" class="img_comment_blog" [src]="url_image_avatar_default"/>
+					<img *ngIf="obj.created_by_image" class="img_comment_blog" [src]="obj.created_by_image"/>
+				</div>
+				<div class="media-body">
+					<div class="media-heading">
+						{{obj.first_name}} {{obj.last_name}} 
+						<span class="pull-right">
+							<span class="time">{{obj.created | amTimeAgo}}</span>
+						</span>
+					</div>
+					<div [innerHTML]="obj.comments"></div>
+					<p>
+						<a class="delete_comments_blog" (click)="show_reply_comment_form(obj.id)">Reply</a>
+						<a *ngIf="obj.created_by === cookie.userName" class="delete_comments_blog" (click)="edit_comment(obj.id)">Edit</a>
+						<a *ngIf="obj.created_by === cookie.userName" class="delete_comments_blog" (click)="delete_comment(obj.id)">Delete</a>
+					</p>
+
+					<!-- reply list -->
+					<div *ngIf="obj.list_reply.length > 0" class="comment_reply">
+						<div class="media"  *ngFor="let item of obj.list_reply" id="comments_{{item.id}}"> 
+							<div class="media-left"> 
+							<i *ngIf="!item.created_by_image" class="fa fa-user-circle fa-3x"  md-list-avatar aria-hidden="true"></i>
+								<img *ngIf="item.created_by_image" class="img_comment_blog" [src]="item.created_by_image"/>
+							</div> 
+							<div class="media-body"> 
+								<div class="media-heading">
+									{{item.first_name}} {{item.last_name}} 
+									<span class="pull-right">
+										<span class="time">{{item.created | amTimeAgo}}</span>
+									</span>
+								</div>
+								<div [innerHTML]="item.comments"></div>
+								<p>
+									<a *ngIf="item.created_by === cookie.userName" class="delete_comments_blog" (click)="edit_comment(item.id)">Edit</a>
+									<a *ngIf="item.created_by === cookie.userName" class="delete_comments_blog" (click)="delete_comment(item.id)">Delete</a>
+								</p>
+							</div> 
+						</div>
+					</div>
+
+
+
+					<!-- reply comment form-->
+					<div *ngIf="show_from_reply === obj.id" style="padding-top:20px">
+						<form name="form" (ngSubmit)="fReply.form.valid && reply_comment_click(blog.id, obj.id, fReply)" #fReply="ngForm" novalidate>
+							<div class="row">
+								<div [class.col-xs-1]="cookie.token" *ngIf="cookie.token" class="img_comment_form">
+									<img *ngIf="!cookie.image" [src]="url_image_avatar_default"/>
+									<img *ngIf="cookie.image" [src]="cookie.image"/>
+								</div>
+								<div [class.col-xs-11]="cookie.token" class="col-xs-12">
+									<md-input-container class="example-full-width">
+										<textarea mdInput placeholder="Reply..." maxlength="200" name="replyComments" [(ngModel)]="reply_comments" #replyComments="ngModel" rows="5" [disabled]="comments_loading" required></textarea>
+									</md-input-container>
+									<div *ngIf="replyComments.errors && (replyComments.dirty || replyComments.touched)" class="help-block">
+										<div [hidden]="!replyComments.errors.required">Field is required</div>
+									</div>
+								</div> 
+							</div>
+							
+
+							<div class="text_right">
+								<button color="primary" md-button md-raised-button [disabled]="!fReply.form.valid || comments_loading" style="margin-top:20px">Reply</button>
+							</div>
+						</form>
+					</div>
+
+
+				</div>
+			</li>
+		</ul>
+		<pagination *ngIf="comments_list.data && comments_list.total >  comments_list.data.length" [totalItems]="comments_list.total" [(ngModel)]="comments_list.info.number" itemsPerPage="{{page.itemsPerPage}}" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+	</div>
+</div>

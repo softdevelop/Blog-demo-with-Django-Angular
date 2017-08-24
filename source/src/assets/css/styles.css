@@ -1,0 +1,140 @@
+@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';
+
+@import 'https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.0/css/mdb.min.css';
+@import 'bootstrap-notifications.css';
+/* You can add global styles to this file, and also import other style files */
+
+
+body{
+	margin: 0;
+	
+  color:#555;
+  background: #f5f5f5;
+}
+body .container{
+  padding-top: 70px;
+  padding-bottom: 70px;
+  background: #fff;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.24);
+
+}
+*:focus{
+	outline: none !important;
+}
+img{
+   max-width: 100%;
+}
+.navbar{
+	border-radius: 0;
+}
+.example-full-width {
+ width: 100%;
+}
+.help-block{ 
+	color: #f44336;
+}
+.text_right{
+	text-align: right;
+}
+.padding_top_bottom_20{
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.padding_0{
+	padding: 0 !important;
+}
+.dropdown-menu-right { right: 0 !important; left: auto !important; }
+.img_notification{
+	/*padding-top: 10px;*/
+	max-width: 45px;
+}
+.notification{
+   padding-left: 0 !important;
+   padding-right: 0 !important;
+}
+.notification .media .media-left{
+   min-width: 70px;
+   text-align: center;
+   padding-right: 0;
+}
+.notification .media .media-left .media-object{
+   margin-top: 15px;
+}
+.limit_2_line {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 2; /* number of lines to show */
+   line-height: 16px;        /* fallback */
+   max-height: 32px;       /* fallback */
+   font-size: 13px;
+}
+.limit_1_line {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 1; /* number of lines to show */
+   line-height: 16px;        /* fallback */
+   max-height: 16px;       /* fallback */
+   margin-bottom: 7px;
+}
+.limit_3_line {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 3; /* number of lines to show */
+   line-height: 16px;        /* fallback */
+   max-height: 48px;       /* fallback */
+   font-size: 13px;
+}
+a:hover{
+	cursor: pointer;
+}
+.media-body .notification-title a{
+   padding: 0;
+}
+.navbar .dropdown-menu{
+   padding:0 ;
+}
+.image_profile_edit{
+   max-width: 200px;
+   margin: 15px 0;
+}
+
+.row-eq-height{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  flex-wrap: wrap;
+}
+.row-eq-height > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+.breadcrumb {
+    padding: .75rem 1rem;
+    margin-bottom: 1rem;
+    background-color: #eceeef;
+}
+.mat-input-container{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.time{
+  color: #999;
+  font-style: italic;
+}
+
+
+img.img_lazy {
+  transition: opacity 1s;
+  opacity: 0;
+}
+img.ng2-lazyloaded {
+  opacity: 1;
+}
+

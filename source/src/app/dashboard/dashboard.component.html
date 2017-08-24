@@ -1,0 +1,39 @@
+<div *ngIf="cookie.roles === 'admin'">
+	<div class="pull-right padding_top_bottom_20">
+		<a md-button md-raised-button routerLink="/dashboard/blog-add" color="primary"><i class="fa fa-plus"></i> Add blog</a>
+	</div>
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Title</th>
+				<th>Content Short</th>
+				<th>Created</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let obj of blogs.data">
+				<td style="width: 10%">
+					<a routerLink="/dashboard/blog-edit/{{obj.id}}">
+						<img *ngIf="obj.image" class="" [src]="obj.image"/>
+						<img *ngIf="!obj.image" class="" [src]="url_image_blog_default"/>
+					</a>
+				</td>
+				<td style="width: 25%"><a routerLink="/dashboard/blog-edit/{{obj.id}}">{{obj.title}}</a></td>
+				<td style="width: 45%">
+					<div class="limit_3_line">
+						{{obj.content_short}}
+					</div>
+				</td>
+				<td> <span class="time">{{obj.created | amTimeAgo}}</span></td>
+				<td>
+					<a md-mini-fab routerLink="/dashboard/blog-edit/{{obj.id}}" color="primary"><md-icon>edit</md-icon></a>
+					<a md-mini-fab (click)="openDelete(obj.id)" color="warn"><md-icon>delete</md-icon></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<pagination *ngIf="blogs.data && blogs.total > page.itemsPerPage" [totalItems]="blogs.total" [(ngModel)]="blogs.number" itemsPerPage="{{page.itemsPerPage}}" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+</div>

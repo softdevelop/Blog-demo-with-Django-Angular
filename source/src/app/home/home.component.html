@@ -1,0 +1,37 @@
+<h1>List Blog</h1>
+<div class="row row-eq-height blog_list"
+infinite-scroll
+[infiniteScrollDistance]="0"
+[infiniteScrollThrottle]="1000"
+[scrollWindow]="true"
+(scrolled)="onScrollBlog(page)"
+
+>
+	<div class="col-md-3 col-sm-6 col-xs-12" *ngFor="let obj of blogs">
+		<div class="item">
+			<div class="img">
+				<a routerLink="/blog/{{obj.id}}" title="{{obj.title}}">
+					<img class="img_lazy" [defaultImage]="url_image_blog_default" [lazyLoad]="obj.image" [errorImage]="url_image_blog_default" [offset]="200">
+				</a>
+			</div>
+			<div class="title">
+				<h4 class="">
+					<a routerLink="/blog/{{obj.id}}" title="{{obj.title}}">{{obj.title}}</a>
+				</h4>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 col-xs-12 author">
+					<a href="">{{obj.author_first_name}} {{obj.author_last_name}}</a>
+				</div>
+				<div class="col-sm-6 col-xs-12 time">
+					{{obj.created | amTimeAgo}}
+				</div>
+			</div>
+
+			<div class="description limit_3_line">
+				{{obj.content_short}}
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <pagination *ngIf="blogs.data" [totalItems]="blogs.total" [(ngModel)]="blogs.number" itemsPerPage="{{page.itemsPerPage}}" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination> -->

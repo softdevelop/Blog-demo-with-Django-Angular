@@ -1,0 +1,48 @@
+.progress_notifications{
+	position: absolute;
+	/*bottom: 0;	*/
+}
+.me_nav .nav li a.link {
+	color: #fff;
+	transition: .5s
+}
+.me_nav .nav li.open a.link,
+.me_nav .nav li a.link:active,
+.me_nav .nav li a.link:focus,
+.me_nav .nav li a.link:hover{
+	background-color: rgba(255,255,255,0.3) !important;
+}
+.me_nav .dropdown-toolbar-title{
+	color: #333
+}
+.me_nav .dropdown-notifications .dropdown-footer{
+    background: #337ab7;
+}
+.me_nav .dropdown-notifications .dropdown-footer a{
+	color:#fff;
+}
+.me_nav .dropdown-notifications .dropdown-footer a:hover{
+	color:#f5f5f5;
+}
+.me_nav .dropdown-notifications .dropdown-menu{
+	border:0;
+	margin-top: 1px;
+}
+.me_nav .dropdown-notifications .dropdown-toolbar{
+	background: #e5e5e5;
+    border: 0;
+    border-radius: 0;
+}
+.me_nav .notification{
+	border-bottom: 0;
+}
+.me_nav .notification .media-body{
+	color: #666;
+}
+.me_nav .notification .media-body span{
+	font-weight: 500;
+	margin-bottom: 5px;
+}
+.me_nav .notification .media-body .notification-meta{
+	color: #999;
+}

@@ -1,0 +1,26 @@
+<h1>Notifications</h1>
+<ul class="notifications notifications-list">
+	<li class="notification" *ngFor="let obj of notifications.data" [class.active]="obj.status === 1">
+		<div class="media">
+			<div class="media-left">
+				<div class="media-object">
+					<i *ngIf="!obj.image" class="fa fa-user-circle fa-3x"  md-list-avatar aria-hidden="true"></i>
+					<img *ngIf="obj.image" class="img-circle img_notification" [src]="obj.image"/>
+				</div> 
+			</div>
+			<div class="media-body">
+				<span class="limit_1_line">
+					<strong class="notification-title">{{obj.firstName}} {{obj.lastName}}</strong> 
+					commented on
+					<strong class="notification-title"><a (click)="mask_read_notification(obj)">{{obj.blog_title}}</a></strong>
+				</span>
+				<p class="notification-desc limit_2_line">{{obj.comments_name}}</p>
+
+				<div class="notification-meta">
+					<small class="timestamp">{{obj.created | amTimeAgo}}</small>
+				</div>
+			</div>
+		</div>
+	</li>
+	<pagination *ngIf="notifications.data?.length > 0 && (notifications.total > page.itemsPerPage)" [totalItems]="notifications.total" [(ngModel)]="notifications.info.number" itemsPerPage="{{page.itemsPerPage}}" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+</ul>

@@ -1,0 +1,36 @@
+<md-card class="example-card">
+	<md-card-header>
+		<md-card-title>Contact</md-card-title>
+	</md-card-header>
+	<md-card-content>
+		<form name="form" (ngSubmit)="f.form.valid && add_contact(f)" #f="ngForm" novalidate>
+			<md-input-container class="example-full-width padding_top_bottom_20">
+				<input mdInput placeholder="Email"  name="emailContact" [(ngModel)]="contact.email" #emailContact="ngModel" required>
+			</md-input-container>	
+			<div *ngIf="emailContact.errors && (emailContact.dirty || emailContact.touched)" class="help-block">
+				<div [hidden]="!emailContact.errors.required">Field is required</div>
+				<div [hidden]="!emailContact.errors.email">Invalid email</div>
+			</div>
+
+
+			<md-input-container class="example-full-width padding_top_bottom_20">
+				<input mdInput placeholder="Title"  name="titleBlog" [(ngModel)]="contact.title" #titleBlog="ngModel" required>
+			</md-input-container>	
+			<div *ngIf="titleBlog.errors && (titleBlog.dirty || titleBlog.touched)" class="help-block">
+				<div [hidden]="!titleBlog.errors.required">Field is required</div>
+			</div>
+
+
+
+			<ckeditor 
+			[(ngModel)]="contact.content" name="contentFull" #contentFull="ngModel" debounce="500"
+			[config]="{height: '300'}"
+			></ckeditor>
+			<div *ngIf="contentFull.errors && (contentFull.dirty || contentFull.touched)" class="help-block">
+				<div [hidden]="!contentFull.errors.required">Field is required</div>
+			</div>
+
+			<button md-button md-raised-button [disabled]="!f.form.valid || load" style="margin-top:20px" color="primary">Save</button>
+		</form>
+	</md-card-content>
+</md-card>

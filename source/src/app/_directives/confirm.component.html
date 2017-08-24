@@ -1,0 +1,6 @@
+<!--<h1 md-dialog-title>Dialog</h1> -->
+<div md-dialog-content>Are you sure?</div>
+<div md-dialog-actions>
+	<button md-button md-raised-button (click)="confirmDelete.close(false)" style="margin-right:5px">No</button> 
+	<button color="warn" md-button md-raised-button (click)="confirmDelete.close(true)">Yes</button>
+</div>

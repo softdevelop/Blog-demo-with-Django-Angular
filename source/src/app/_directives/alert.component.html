@@ -1,0 +1,1 @@
+﻿<div *ngIf="message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }" style="transition:0.5s">{{message.text}}</div>

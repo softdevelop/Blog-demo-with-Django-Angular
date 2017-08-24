@@ -1,0 +1,70 @@
+<md-card class="example-card" *ngIf="profiles">
+	<md-card-header>
+		<md-card-title>Edit profile {{profiles.userName}}</md-card-title>
+	</md-card-header>
+	<md-card-content>
+		<form name="form" (ngSubmit)="f.form.valid && edit_profile()" #f="ngForm" novalidate>
+			<div class="row">
+				<div class="col-xs-6">
+					<md-input-container class="example-full-width">
+						<input mdInput placeholder="First Name"  name="firstName" [(ngModel)]="profiles.firstName" #firstName="ngModel"  required>
+					</md-input-container>	
+					<div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="help-block">
+						<div [hidden]="!firstName.errors.required">Field is required</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<md-input-container class="example-full-width">
+						<input mdInput placeholder="Last Name"  name="lastName" [(ngModel)]="profiles.lastName" #lastName="ngModel"  required>
+					</md-input-container>	
+					<div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="help-block">
+						<div [hidden]="!lastName.errors.required">Field is required</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-6">
+					<md-input-container class="example-full-width">
+						<input mdInput placeholder="Email"  name="email" [(ngModel)]="profiles.email" #email="ngModel"  required>
+					</md-input-container>	
+					<div *ngIf="email.errors && (email.dirty || email.touched)" class="help-block">
+						<div [hidden]="!email.errors.required">Field is required</div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<md-select class="example-full-width mat-input-container" name="roles" [(ngModel)]="profiles.roles" placeholder="Roles" #roles="ngModel" required>
+						<md-option *ngFor="let item of listRoles" [value]="item">{{item}}</md-option>
+					</md-select>
+					<div *ngIf="roles.errors && (roles.dirty || roles.touched)" class="help-block">
+						<div [hidden]="!roles.errors.required">Field is required</div>
+					</div>
+				</div>
+			</div>
+
+
+			
+			
+			<ckeditor [(ngModel)]="profiles.info" name="profileInfo" #profileInfo="ngModel" debounce="500" [config]="{height: '200'}" required></ckeditor>
+			<div *ngIf="profileInfo.errors && (profileInfo.dirty || profileInfo.touched)" class="help-block">
+				<div [hidden]="!profileInfo.errors.required">Field is required</div>
+			</div>
+			
+			<div style="margin-top:15px">
+				<div *ngIf="profiles.image && !image_preview">
+					<img class="image_profile_edit" [src]="profiles.image" />
+				</div>
+				<div *ngIf="image_preview">
+					<img class="image_profile_edit" [src]="image_preview" width="200"  />
+				</div>
+				<input type="file" ng2FileSelect [uploader]="uploader" accept="image/*"/>
+			</div>
+
+
+
+			<div class="text_right">
+				<button md-button md-raised-button [disabled]="!f.form.valid" style="margin-top:20px" color="primary">Save</button>
+			</div>
+		</form>
+	</md-card-content>
+</md-card>
